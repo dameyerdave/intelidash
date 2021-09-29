@@ -1,0 +1,22 @@
+[
+  {
+    "model": "core.entrytype",
+    "pk": 1,
+    "fields": {
+      "owner": null,
+      "createdDate": "2020-01-01T00:00:00Z",
+      "short": "NEPA",
+      "type": "Newspaper"
+    }
+  },
+  {
+    "model": "core.entrytype",
+    "pk": 2,
+    "fields": {
+      "owner": null,
+      "createdDate": "2020-01-01T00:00:00Z",
+      "short": "TWIT",
+      "type": "Twitter"
+    }
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "model": "core.source",
+    "pk": 1,
+    "fields": {
+      "owner": 2,
+      "createdDate": "2021-01-01T00:00:00Z",
+      "short": "20MIN",
+      "source": "20 Minuten"
+    }
+  }
+]
