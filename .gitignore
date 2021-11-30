@@ -1,3 +1,20 @@
-.env
-Pipfile
-Pipfile.lock
+# General files (e.g. from MacOS or development environment)
+.DS_Store
+.vscode
+
+# Environment files
+.env*
+!.env.TEMPLATE
+*.local
+*.development
+
+# Python files
+Pipfile*
+__pycache__
+
+
+# Vue (node) files
+node_modules
+dist
+dist-ssr
+

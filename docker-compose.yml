@@ -1,6 +1,21 @@
 version: '3'
 
 services:
+  ui:
+    build:
+      context: ui
+    image: ui
+    hostname: ui
+    depends_on:
+      - be
+      - db
+      - docs
+    restart: unless-stopped
+    volumes:
+      - .git:/app/.git:delegated,ro
+    networks:
+      - myproject
+    env_file: .env
   app:
     build:
       context: .
@@ -15,8 +30,6 @@ services:
              python manage.py migrate &&
              python manage.py initadmin &&
              python manage.py runserver 0.0.0.0:8000"
-
-
     environment:
       - POSTGRES_HOST=db
     env_file: .env
