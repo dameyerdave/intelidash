@@ -4,7 +4,7 @@
 
 DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/../"
 GRN="${DIR}/node_modules/.bin/git-release-notes"
-CHANGELOG="docs/CHANGELOG.md"
+CHANGELOG="${DIR}/docs/CHANGELOG.md"
 
 if [ ! -f ${GRN} ]; then
   echo "Installing git-release-notes because it's not there..."

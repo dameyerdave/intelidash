@@ -13,10 +13,13 @@
 Pipfile*
 __pycache__
 **/docs/site
-
+**/docs/docs/CHANGELOG.md
 
 # Vue (node) files
 node_modules
 dist
 dist-ssr
 
+# Yarn files
+api/app/package.json
+api/app/yarn.lock
