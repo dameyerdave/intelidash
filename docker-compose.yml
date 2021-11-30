@@ -7,29 +7,28 @@ services:
     image: ui
     hostname: ui
     depends_on:
-      - be
+      - api
       - db
-      - docs
     restart: unless-stopped
     volumes:
       - .git:/app/.git:delegated,ro
-    networks:
-      - myproject
     env_file: .env
-  app:
+  api:
     build:
-      context: .
+      context: api
+    hostname: api
     restart: unless-stopped
-    ports:
-      - '8000:8000'
     volumes:
-      - ./app:/app
+      - .git:/app/.git:delegated,ro
+      - ./api/app:/app
     command: >
-      sh -c "python manage.py collectstatic --noinput &&
+      sh -c "./docs/scripts/generate_changelog.sh &&
+             (cd docs; mkdocs build --clean) &&
+             python manage.py collectstatic --noinput &&
              python manage.py wait_for_db &&
              python manage.py migrate &&
              python manage.py initadmin &&
-             python manage.py runserver 0.0.0.0:8000"
+             python manage.py runserver 0.0.0.0:5000"
     environment:
       - POSTGRES_HOST=db
     env_file: .env
@@ -38,7 +37,6 @@ services:
 
   db:
     image: postgres:13.4-alpine
+    hostname: db
     restart: unless-stopped
-    ports:
-      - '55432:5432'
     env_file: .env

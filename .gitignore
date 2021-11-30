@@ -7,10 +7,12 @@
 !.env.TEMPLATE
 *.local
 *.development
+!Dockerfile.development
 
 # Python files
 Pipfile*
 __pycache__
+**/docs/site
 
 
 # Vue (node) files

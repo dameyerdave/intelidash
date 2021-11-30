@@ -15,7 +15,7 @@ from os import environ
 from datetime import timedelta as td
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = str(Path(__file__).resolve().parent.parent)
 
 
 # Quick-start development settings - unsuitable for production
@@ -29,9 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,10 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_filters',
-    'django_keycloak.apps.KeycloakAppConfig',
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
+    'django_keycloak.apps.KeycloakAppConfig',
+    'django_mkdocs',
     'core',
 ]
 
@@ -60,6 +59,7 @@ MIDDLEWARE = [
 ]
 
 AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
     'django_keycloak.auth.backends.KeycloakAuthorizationCodeBackend'
 ]
 
@@ -185,3 +185,9 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': td(hours=1),
     'JWT_REFRESH_EXPIRATION_DELTA': td(days=7),
 }
+
+PROJECT_DIR = BASE_DIR
+DOCUMENTATION_ROOT = PROJECT_DIR + '/docs'
+DOCUMENTATION_HTML_ROOT = DOCUMENTATION_ROOT + '/site'
+DOCUMENTATION_XSENDFILE = False
+DOCUMENTATION_ACCESS_FUNCTION = lambda _: True

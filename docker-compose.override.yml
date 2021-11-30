@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  ui:
+    build:
+      dockerfile: Dockerfile.development
+    volumes:
+      - ./ui:/app
+    ports:
+      - '8081:8080'
+  api:
+    ports:
+      - '5051:5000'
+  db:
+    ports:
+        - '55432:5432'
