@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+from keycloak_oidc.default_settings import *
 from pathlib import Path
 from os import environ
 from datetime import timedelta as td
@@ -33,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'keycloak_oidc',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -41,7 +43,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
-    'django_keycloak.apps.KeycloakAppConfig',
     'django_mkdocs',
     'core',
 ]
@@ -53,17 +54,27 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'mozilla_django_oidc.middleware.SessionRefresh',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_keycloak.middleware.BaseKeycloakMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'django_keycloak.auth.backends.KeycloakAuthorizationCodeBackend'
+    'intelidash.auth.OIDCAuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend'
 ]
 
-LOGIN_URL = 'keycloak_login'
+OIDC_AUTH_URI = environ.get('OIDC_AUTH_URI')
+OIDC_RP_CLIENT_ID = environ.get('OIDC_RP_CLIENT_ID')
+OIDC_RP_CLIENT_SECRET = environ.get('OIDC_CLIENT_SECRET')
+OIDC_RP_SCOPES = environ.get('OIDC_RP_SCOPES')
+
+# Keycloak-specific (as per http://KEYCLOAK_SERVER/auth/realms/REALM/.well-known/openid-configuration)
+OIDC_OP_AUTHORIZATION_ENDPOINT = OIDC_AUTH_URI + '/protocol/openid-connect/auth'
+OIDC_OP_TOKEN_ENDPOINT = OIDC_AUTH_URI + '/protocol/openid-connect/token'
+OIDC_OP_USER_ENDPOINT = OIDC_AUTH_URI + '/protocol/openid-connect/userinfo'
+OIDC_OP_JWKS_ENDPOINT = OIDC_AUTH_URI + '/protocol/openid-connect/certs'
+OIDC_OP_LOGOUT_ENDPOINT = OIDC_AUTH_URI + '/protocol/openid-connect/logout'
 
 # CORS
 # We do not allow cookies
@@ -166,8 +177,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication'
+        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'mozilla_django_oidc.contrib.drf.OIDCAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        # 'oidc_auth.authentication.BearerTokenAuthentication'
     ),
     'DEFAULT_PERMISSION_CLASSES': [
         # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
@@ -186,8 +199,9 @@ JWT_AUTH = {
     'JWT_REFRESH_EXPIRATION_DELTA': td(days=7),
 }
 
+# Mkdocs config
 PROJECT_DIR = BASE_DIR
 DOCUMENTATION_ROOT = PROJECT_DIR + '/docs'
 DOCUMENTATION_HTML_ROOT = DOCUMENTATION_ROOT + '/site'
 DOCUMENTATION_XSENDFILE = False
-DOCUMENTATION_ACCESS_FUNCTION = lambda _: True
+def DOCUMENTATION_ACCESS_FUNCTION(_): return True
