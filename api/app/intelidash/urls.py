@@ -42,7 +42,7 @@ urlpatterns = [
     url(r'^auth/token/', obtain_jwt_token),
     url(r'^auth/refresh_token/', refresh_jwt_token),
     url(r'^docs/', include('django_mkdocs.urls', namespace='documentation')),
-    url(r'^keycloak/', include('django_keycloak.urls')),
+    url(r'^oidc/', include('keycloak_oidc.urls')),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include(router.urls)),
