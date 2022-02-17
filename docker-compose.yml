@@ -4,14 +4,16 @@ services:
   ui:
     build:
       context: ui
+      args:
+        GIT_VERSION: "${GIT_VERSION}"
+        GIT_BRANCH: "${GIT_BRANCH}"
+        GIT_LASTCOMMITDATE: "${GIT_LASTCOMMITDATE}"
     image: ui
     hostname: ui
     depends_on:
       - api
       - db
     restart: unless-stopped
-    volumes:
-      - .git:/app/.git:delegated,ro
     env_file: .env
   api:
     build:

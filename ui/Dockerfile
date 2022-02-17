@@ -1,6 +1,14 @@
 # From node version 17 on it uses ssl v3 which is not supported
 # in this application
 FROM node:16.13-bullseye as build-stage
+
+ARG GIT_VERSION
+ARG GIT_BRANCH
+ARG GIT_LASTCOMMITDATE
+ENV VITE_APP_VERSION=${GIT_VERSION}
+ENV VITE_APP_BRANCH=${GIT_BRANCH}
+ENV VITE_APP_LASTCOMMITDATE=${GIT_LASTCOMMITDATE}
+
 WORKDIR /app
 COPY package*.json ./
 COPY yarn.lock ./

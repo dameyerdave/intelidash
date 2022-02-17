@@ -1,6 +1,14 @@
-FROM python:3.9.7-alpine3.14
+FROM python:3.9.9-alpine3.15
 
 ENV PYTHONUNBUFFERED 1
+
+ARG GIT_VERSION
+ARG GIT_BRANCH
+ARG GIT_LASTCOMMITDATE
+
+ENV VITE_APP_VERSION=$GIT_VERSION
+ENV VITE_APP_BRANCH=$GIT_BRANCH
+ENV VITE_APP_LASTCOMMITDATE=$GIT_LASTCOMMITDATE
 
 COPY ./requirements.txt /requirements.txt
 RUN apk add --update --no-cache postgresql-client jpeg-dev git bash
