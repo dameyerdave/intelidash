@@ -1,3 +1,4 @@
+# Django dependencies
 Django>=3.2.7,<4.0.0
 djangorestframework>=3.12.4,<4.0.0
 django-cors-headers>=3.8.0,<4.0.0
@@ -7,14 +8,17 @@ Pillow>=8.3.2,<9.0.0
 django-computed-property>=0.3.0,<1.0.0
 djangorestframework_jwt>=1.11.0,<2.0.0
 
+# MkDocs dependecies
 #django-mkdocs>=0.1.2,<1.0.0
 git+https://github.com/dameyerdave/django-mkdocs.git
-
-datapunt_keycloak_oidc>=0.5.1,<1.0.0
-
-flake8>=3.9.2,<4.0.0
-
 mkdocs>=1.2.3,<2.0.0
 mkdocs-include-markdown-plugin>=3.2.3,<4.0.0
 mkdocs-material-extensions>=1.0.3,<2.0.0
 mkdocs-material>=8.0.1,<9.0.0
+
+# Keycloak dependencies
+datapunt_keycloak_oidc>=0.5.1,<1.0.0
+
+# Dev dependencies
+flake8>=4.0.1,<5.0.0
+autopep8>=1.6.0,<2.0.0
