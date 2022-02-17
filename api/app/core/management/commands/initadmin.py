@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        superuser = environ.get('DJANGO_SU', 'admin')
+        superuser = environ.get('DJANGO_SU_NAME', 'admin')
         User = get_user_model()
         if not User.objects.filter(username=superuser).exists():
             User.objects.create_superuser(
