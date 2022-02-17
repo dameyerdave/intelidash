@@ -14,6 +14,8 @@ nav:
   - Changelog: CHANGELOG.md
 plugins:
   - include-markdown
+  - search:
+      lang: en
 markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
@@ -22,3 +24,4 @@ markdown_extensions:
       permalink: "#"
       baselevel: 2
       separator: "_"
+  - attr_list
