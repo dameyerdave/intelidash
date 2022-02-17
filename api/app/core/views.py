@@ -8,14 +8,9 @@ from rest_framework.response import Response
 from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from core.permissions import IsOwnerOrAdmin
-from meta.views import MetadataMixin
 
 
-class MetaDataModelViewSet(ModelViewSet, MetadataMixin):
-    pass
-
-
-class StrandViewSet(MetaDataModelViewSet):
+class StrandViewSet(ModelViewSet):
     queryset = Strand.objects.all()
     serializer_class = StrandSerializer
     permission_classes = [IsOwnerOrAdmin]
@@ -24,7 +19,7 @@ class StrandViewSet(MetaDataModelViewSet):
     filterset_fields = ['mission__id']
 
 
-class SourceViewSet(MetaDataModelViewSet):
+class SourceViewSet(ModelViewSet):
     queryset = Source.objects.all()
     serializer_class = SourceSerializer
     permission_classes = [IsOwnerOrAdmin]
@@ -33,13 +28,13 @@ class SourceViewSet(MetaDataModelViewSet):
     filterset_fields = ['mission__id']
 
 
-class EntryTypeViewSet(MetaDataModelViewSet):
+class EntryTypeViewSet(ModelViewSet):
     queryset = EntryType.objects.all()
     serializer_class = EntryTypeSerializer
     permission_classes = [IsOwnerOrAdmin]
 
 
-class EntryViewSet(MetaDataModelViewSet):
+class EntryViewSet(ModelViewSet):
     queryset = Entry.objects.all()
     serializer_class = EntrySerializer
     permission_classes = [IsOwnerOrAdmin]
@@ -48,13 +43,13 @@ class EntryViewSet(MetaDataModelViewSet):
     filterset_fields = ['mission__id', 'strand__id', 'map_entry__id']
 
 
-class InterpretationViewSet(MetaDataModelViewSet):
+class InterpretationViewSet(ModelViewSet):
     queryset = Interpretation.objects.all()
     serializer_class = InterpretationSerializer
     permission_classes = [IsOwnerOrAdmin]
 
 
-class MapEntryViewSet(MetaDataModelViewSet):
+class MapEntryViewSet(ModelViewSet):
     queryset = MapEntry.objects.all()
     serializer_class = MapEntrySerializer
     permission_classes = [IsOwnerOrAdmin]
@@ -73,13 +68,13 @@ class MapEntryViewSet(MetaDataModelViewSet):
         })
 
 
-class MapEntryTypeViewSet(MetaDataModelViewSet):
+class MapEntryTypeViewSet(ModelViewSet):
     queryset = MapEntryType.objects.all()
     serializer_class = MapEntryTypeSerializer
     permission_classes = [IsOwnerOrAdmin]
 
 
-class MapLayerViewSet(MetaDataModelViewSet):
+class MapLayerViewSet(ModelViewSet):
     queryset = MapLayer.objects.all()
     serializer_class = MapLayerSerializer
     permission_classes = [IsOwnerOrAdmin]
@@ -88,7 +83,7 @@ class MapLayerViewSet(MetaDataModelViewSet):
     filterset_fields = ['mission__id']
 
 
-class MapDrawingViewSet(MetaDataModelViewSet):
+class MapDrawingViewSet(ModelViewSet):
     queryset = MapDrawing.objects.all()
     serializer_class = MapDrawingSerializer
     permission_classes = [IsOwnerOrAdmin]
@@ -107,7 +102,7 @@ class MapDrawingViewSet(MetaDataModelViewSet):
         })
 
 
-class MissionViewSet(MetaDataModelViewSet):
+class MissionViewSet(ModelViewSet):
     queryset = Mission.objects.all()
     serializer_class = MissionSerializer
     permission_classes = [IsOwnerOrAdmin]

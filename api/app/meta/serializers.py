@@ -3,7 +3,14 @@ from rest_framework.schemas.openapi import AutoSchema
 
 
 class APIMetadata(SimpleMetadata):
-    """Extended metadata generator."""
+    """
+    Extended metadata generator.
+
+    To use this we need to adjust the settings accordingly:
+    REST_FRAMEWORK = {
+        'DEFAULT_METADATA_CLASS': 'meta.serializers.APIMetadata',
+    }
+    """
 
     def get_field_info(self, field):
         field_info = super().get_field_info(field)
